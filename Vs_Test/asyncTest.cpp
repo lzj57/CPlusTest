@@ -8,7 +8,9 @@
 
 #include <list>
 
-#include <sstream>
+//#include <sstream> //获取线程的时候调用
+
+#include <stdexcept>
 
 using namespace std;
 
@@ -154,6 +156,57 @@ void mulDoSom() {
 	}
 	catch (const exception& e) {
 		cout << "\nEXCEPTION:" << e.what() << endl;
+	}
+	cout << "\ndone" << endl;
+}
+
+
+/*
+future处理结果只能get一次，第二次调用一般是抛出一个future_error
+shared_futrue---可以多次调用get,get的每次结果一致
+*/
+
+int queryNumber() {
+	cout << "read number:";
+	int num;
+	cin >> num;
+	if (!cin) {
+		throw runtime_error("no number read");
+	}
+	return num;
+}
+
+void doSomething1(char c, shared_future<int> f) {
+	try {
+		int num = f.get();
+		for (int i = 0; i < num; ++i) {
+			this_thread::sleep_for(chrono::milliseconds(100));
+			cout.put(c).flush();
+		}	
+	}
+	catch (const exception& e) {
+		cerr << "EXCEPTION in thread" << this_thread::get_id() \
+			<< ":" << e.what() << endl;
+	}
+}
+
+/*
+auto代替shared_future---auto f = async(queryNumber).shared();
+所有shared future object共享shared state(async产生)
+*/
+void shared_fT() {
+	try {
+		//shared_future<int> f = async(queryNumber);
+		auto f = async(queryNumber).share();
+		auto f1 = async(launch::async, doSomething1, '.', f);
+		auto f2 = async(launch::async, doSomething1, '+', f);
+		auto f3 = async(launch::async, doSomething1, '*', f);
+		f1.get();
+		f2.get();
+		f3.get();
+	}
+	catch (const exception& e) {
+		cout << "\nException" << e.what() << endl;
 	}
 	cout << "\ndone" << endl;
 }

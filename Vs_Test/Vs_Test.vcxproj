@@ -79,11 +79,23 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="asyncTest.cpp" />
+    <ClCompile Include="Atomic_Test.cpp" />
+    <ClCompile Include="Condition_Var_Test.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="Mutex_Lock_Test.cpp" />
+    <ClCompile Include="Packaged_TaskTest.cpp" />
+    <ClCompile Include="PromiseTest.cpp" />
+    <ClCompile Include="ThreadTest.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="asyncTest.h" />
+    <ClInclude Include="Atomic_Test.h" />
+    <ClInclude Include="Condition_Var_Test.h" />
+    <ClInclude Include="Mutex_Lock_Test.h" />
+    <ClInclude Include="Packaged_TaskTest.h" />
+    <ClInclude Include="PromiseTest.h" />
     <ClInclude Include="resource.h" />
+    <ClInclude Include="ThreadTest.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Vs_Test.rc" />

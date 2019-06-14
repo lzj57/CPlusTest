@@ -6,6 +6,8 @@ void sum_func();
 void allocTest();
 
 void mulDoSom();
+
+void shared_fT();
  
 #endif // !ASYNCTEST_H
 
