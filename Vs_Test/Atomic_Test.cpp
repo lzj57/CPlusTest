@@ -21,7 +21,7 @@ void provider() {
 
 void consumer() {
 	//wait for readliness and do something else
-	while (readyFlag.load()) {
+	while (!readyFlag.load()) {
 		std::cout.put('.').flush();
 		std::this_thread::sleep_for(std::chrono::milliseconds(500));
 	}
